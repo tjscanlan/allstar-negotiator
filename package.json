@@ -1,0 +1,19 @@
+{
+  "name": "allstar-negotiator",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "typecheck": "bun run --filter '*' typecheck",
+    "test": "bun test",
+    "dev:orchestrator": "bun run --filter @negotiator/orchestrator dev",
+    "dev:gateway": "bun run --filter @negotiator/gateway dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "@types/bun": "latest",
+    "bun-types": "latest"
+  }
+}

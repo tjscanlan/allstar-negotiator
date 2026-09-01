@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Negotiation Ledger</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Negotiation Ledger</h1>
+    <div class="topbar-controls">
+      <span id="status" class="status status-idle">idle</span>
+      <button id="start-btn" type="button">Start negotiation</button>
+    </div>
+  </header>
+
+  <main class="ledger">
+    <section class="column" id="column-a" aria-label="Agent A">
+      <h2>Agent A <span class="floor-note">(55% floor)</span></h2>
+      <div class="cards" id="cards-a"></div>
+    </section>
+
+    <section class="scale" aria-label="Convergence">
+      <div class="scale-round">
+        <span class="scale-label">Round</span>
+        <span id="round-number">–</span>
+      </div>
+      <div class="scale-gap">
+        <span class="scale-label">Gap</span>
+        <span id="gap-number">–</span>
+      </div>
+      <div class="scale-needle-track">
+        <div id="scale-needle" class="scale-needle"></div>
+      </div>
+      <div class="scale-converging" id="converging-indicator"></div>
+    </section>
+
+    <section class="column" id="column-b" aria-label="Agent B">
+      <h2>Agent B <span class="floor-note">(40% floor)</span></h2>
+      <div class="cards" id="cards-b"></div>
+    </section>
+  </main>
+
+  <footer id="verdict-strip" class="verdict-strip" hidden></footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

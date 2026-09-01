@@ -1,0 +1,254 @@
+:root {
+  --paper: #f6f1e7;
+  --paper-line: #ddd3bd;
+  --ink: #2a2620;
+  --ink-soft: #6b6355;
+  --agent-a: #1f4b6e;
+  --agent-a-soft: #dce8f0;
+  --agent-b: #8c3a2b;
+  --agent-b-soft: #f2e0da;
+  --accent: #b8892b;
+  --accept: #2f6d3f;
+  --reject: #a33d3d;
+  --deadlock: #a33d3d;
+  --settled: #2f6d3f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 2rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.topbar h1 {
+  font-size: 1.35rem;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+.topbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--ink-soft);
+  color: var(--ink-soft);
+}
+
+.status-connected {
+  color: var(--accept);
+  border-color: var(--accept);
+}
+
+.status-error {
+  color: var(--reject);
+  border-color: var(--reject);
+}
+
+#start-btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem 1.1rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#start-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.ledger {
+  display: grid;
+  grid-template-columns: 1fr 260px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  align-items: start;
+}
+
+.column h2 {
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--paper-line);
+}
+
+#column-a h2 {
+  color: var(--agent-a);
+}
+
+#column-b h2 {
+  color: var(--agent-b);
+}
+
+.floor-note {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  font-weight: normal;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  background: #fffdf8;
+  border: 1px solid var(--paper-line);
+  border-left-width: 4px;
+  border-radius: 4px;
+  padding: 0.75rem 0.9rem;
+}
+
+#column-a .card {
+  border-left-color: var(--agent-a);
+}
+
+#column-b .card {
+  border-left-color: var(--agent-b);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.35rem;
+}
+
+.card-share {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.card-action {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+}
+
+.card-action-propose {
+  background: var(--paper-line);
+  color: var(--ink);
+}
+
+.card-action-accept {
+  background: var(--accept);
+  color: #fff;
+}
+
+.card-action-reject {
+  background: var(--reject);
+  color: #fff;
+}
+
+.card-rationale {
+  margin: 0.4rem 0 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.scale {
+  position: sticky;
+  top: 1.5rem;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: #fffdf8;
+  padding: 1rem;
+  text-align: center;
+}
+
+.scale-round,
+.scale-gap {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.scale-label {
+  color: var(--ink-soft);
+}
+
+.scale-needle-track {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accept), var(--accent) 50%, var(--reject));
+  margin: 1rem 0;
+}
+
+.scale-needle {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 3px;
+  height: 18px;
+  background: var(--ink);
+  transform: translateX(-50%);
+  transition: left 0.4s ease;
+}
+
+.scale-converging {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  min-height: 1em;
+}
+
+.verdict-strip {
+  margin: 0 2rem 2rem;
+  padding: 1rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  border: 1px solid var(--paper-line);
+}
+
+.verdict-settled {
+  background: var(--agent-a-soft);
+  border-color: var(--settled);
+  color: var(--settled);
+}
+
+.verdict-deadlock {
+  background: var(--agent-b-soft);
+  border-color: var(--deadlock);
+  color: var(--deadlock);
+}
+
+@media (max-width: 780px) {
+  .ledger {
+    grid-template-columns: 1fr;
+  }
+
+  .scale {
+    position: static;
+  }
+}

@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Node / Bun ---
+node_modules/
+dist/
+*.tsbuildinfo
+.env.local
+
+# Bun's default lockfile is the text-based bun.lock (commit it, like
+# package-lock.json). Only ignore the legacy binary lockfile if it's the
+# one actually produced instead:
+# bun.lockb

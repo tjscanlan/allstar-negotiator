@@ -1,0 +1,22 @@
+{
+  "name": "@negotiator/gateway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "bun run src/index.ts"
+  },
+  "dependencies": {
+    "@negotiator/shared-types": "workspace:*",
+    "@negotiator/orchestrator": "workspace:*",
+    "fastify": "^5.2.0",
+    "@fastify/websocket": "^11.0.0",
+    "@fastify/static": "^8.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
