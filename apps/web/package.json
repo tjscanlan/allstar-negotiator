@@ -1,0 +1,20 @@
+{
+  "name": "@negotiator/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "bun build src/main.tsx --outfile=app.js --target=browser --production"
+  },
+  "dependencies": {
+    "@negotiator/shared-types": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.7.0"
+  }
+}

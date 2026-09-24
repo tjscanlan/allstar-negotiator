@@ -230,3 +230,9 @@ dist/
 
 # Gateway's local SQLite persistence (apps/gateway/src/db.ts)
 apps/gateway/data/
+
+# Bundled frontend output (source lives in apps/web/src; built by
+# `bun run build:web`, see apps/web/package.json)
+apps/web/app.js
+apps/web/app.js.map
+apps/web/dist/

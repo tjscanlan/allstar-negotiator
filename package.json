@@ -8,8 +8,9 @@
   "scripts": {
     "typecheck": "bun run --filter '*' typecheck",
     "test": "bun test",
+    "build:web": "bun run --filter @negotiator/web build",
     "dev:orchestrator": "bun --env-file=.env run --filter @negotiator/orchestrator dev",
-    "dev:gateway": "bun --env-file=.env run --filter @negotiator/gateway dev"
+    "dev:gateway": "bun run build:web && bun --env-file=.env run --filter @negotiator/gateway dev"
   },
   "devDependencies": {
     "typescript": "^5.7.0",
