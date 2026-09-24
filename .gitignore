@@ -227,3 +227,6 @@ dist/
 # package-lock.json). Only ignore the legacy binary lockfile if it's the
 # one actually produced instead:
 # bun.lockb
+
+# Gateway's local SQLite persistence (apps/gateway/src/db.ts)
+apps/gateway/data/

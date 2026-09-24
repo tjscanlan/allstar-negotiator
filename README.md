@@ -31,8 +31,13 @@ Orchestrator  ──calls──▶  Agent A (Claude)
         │            ──calls──▶  Agent B (Claude)
         │            ──calls──▶  Arbiter (deterministic)
         ▼
-NegotiationEvent stream ──▶ broadcast to all WS subscribers
+NegotiationEvent stream ──▶ persisted to SQLite + broadcast to all WS subscribers
 ```
+
+Every event is persisted to `apps/gateway/data/negotiations.db` (SQLite, via
+`bun:sqlite`) as it's emitted, so a negotiation survives a gateway restart —
+reconnecting to `/negotiations/:id/stream` replays its full history from
+disk, not just from this process's memory.
 
 Bun workspaces monorepo:
 
@@ -58,9 +63,6 @@ Every workspace script runs via `bun run --filter <name> <script>`; the root
 - Arbiter is pure math (share-gap threshold + stall detection), not an LLM
   call — cheaper and deterministic; swap in a Claude-based arbiter if you
   want it to reason about non-numeric rationale quality.
-- No persistence layer (Postgres/Redis) — history lives only in the
-  orchestrator's in-memory loop and the gateway's per-negotiation event
-  history (replayed to newly-connecting WS clients).
 - Single negotiation in flight per gateway process isn't enforced — the
   subscriber map is already keyed by negotiation id, so concurrent runs
   work.
@@ -73,5 +75,6 @@ Every workspace script runs via `bun run --filter <name> <script>`; the root
   events with Zod instead of hand-parsing JSON.
 - Lift `app.js`'s state handling into React using the same `shared-types`
   package — the HTML/CSS structure translates directly into JSX.
-- Add a persistence layer if you need replay of past negotiations across
-  gateway restarts.
+- Swap the gateway's SQLite persistence (`apps/gateway/src/db.ts`) for
+  Postgres/Redis if you need it to survive more than a single machine, or
+  add retention/cleanup — right now `data/negotiations.db` grows forever.
