@@ -6,7 +6,7 @@ import { TopBar, type StatusKind } from "./components/TopBar";
 import { VerdictStrip, type Terminal } from "./components/VerdictStrip";
 import { parseNegotiationEvent } from "./negotiationEvents";
 
-interface LedgerState {
+export interface LedgerState {
   statusText: string;
   statusKind: StatusKind;
   busy: boolean;
@@ -18,7 +18,7 @@ interface LedgerState {
   terminal: Terminal | null;
 }
 
-const INITIAL_STATE: LedgerState = {
+export const INITIAL_STATE: LedgerState = {
   statusText: "idle",
   statusKind: "idle",
   busy: false,
@@ -30,7 +30,7 @@ const INITIAL_STATE: LedgerState = {
   terminal: null,
 };
 
-type Action =
+export type Action =
   | { type: "start" }
   | { type: "connected" }
   | { type: "closed" }
@@ -38,7 +38,7 @@ type Action =
   | { type: "startFailed" }
   | { type: "negotiationEvent"; event: NegotiationEvent };
 
-function reducer(state: LedgerState, action: Action): LedgerState {
+export function reducer(state: LedgerState, action: Action): LedgerState {
   switch (action.type) {
     case "start":
       return { ...INITIAL_STATE, busy: true, statusText: "starting…" };

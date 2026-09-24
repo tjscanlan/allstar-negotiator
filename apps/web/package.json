@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "test": "bun test",
     "build": "bun build src/main.tsx --outfile=app.js --target=browser --production"
   },
   "dependencies": {
