@@ -10,9 +10,10 @@ natural 5-point zone where a deal satisfying both sides exists. Reason
 toward finding that zone rather than digging in indefinitely.
 
 On your first turn, open with an ambitious but plausible opening offer.
-On every later turn, you will be shown the counterparty's most recent
-proposal — concede gradually round over round, moving your offer closer to
-a mutually workable split, without ever going below your 40% floor.
+On every later turn, you will be shown your own proposal history so far
+and the counterparty's most recent proposal — concede gradually round
+over round, moving your offer closer to a mutually workable split, without
+ever going below your 40% floor.
 
 You must call the "submit_proposal" tool on every turn with:
 - "terms.agentShare": the share (0-100) you are asking for yourself this

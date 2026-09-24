@@ -25,6 +25,8 @@ export async function runNegotiation(emit: (event: NegotiationEvent) => void): P
   let arbiterState: ArbiterState = INITIAL_ARBITER_STATE;
   let lastProposalA: Proposal | null = null;
   let lastProposalB: Proposal | null = null;
+  const historyA: Proposal[] = [];
+  const historyB: Proposal[] = [];
 
   for (let round = 1; round <= MAX_ROUNDS; round++) {
     emit({ type: "round_started", round });
@@ -32,10 +34,13 @@ export async function runNegotiation(emit: (event: NegotiationEvent) => void): P
     // Both agents act in the same Promise.all — neither awaits the other,
     // which is what structurally enforces "simultaneous, not sequential":
     // each only ever sees the counterparty's *previous* round's proposal.
+    // `historyA`/`historyB` (each agent's own prior proposals) are passed
+    // in separately since neither agent's LLM call carries accumulated
+    // conversation state itself.
     const proposalAPromise: Promise<Proposal> =
-      round === 1 ? agentA.proposeOpeningTerms(round) : agentA.reactToProposal(round, lastProposalB!);
+      round === 1 ? agentA.proposeOpeningTerms(round) : agentA.reactToProposal(round, lastProposalB!, historyA);
     const proposalBPromise: Promise<Proposal> =
-      round === 1 ? agentB.proposeOpeningTerms(round) : agentB.reactToProposal(round, lastProposalA!);
+      round === 1 ? agentB.proposeOpeningTerms(round) : agentB.reactToProposal(round, lastProposalA!, historyB);
     const [proposalA, proposalB] = await Promise.all([proposalAPromise, proposalBPromise]);
 
     emit({ type: "proposal", proposal: proposalA });
@@ -59,6 +64,8 @@ export async function runNegotiation(emit: (event: NegotiationEvent) => void): P
       return;
     }
 
+    historyA.push(proposalA);
+    historyB.push(proposalB);
     lastProposalA = proposalA;
     lastProposalB = proposalB;
   }

@@ -32,14 +32,28 @@ export async function proposeOpeningTerms(round: number): Promise<Proposal> {
  * counterparty's *previous* round's proposal, never the current round's
  * (which doesn't exist yet, since neither agent awaits the other). Do not
  * "fix" this into a sequential call; it's a deliberate demo simplification.
+ *
+ * Each call here is otherwise stateless (no accumulated Anthropic message
+ * history), so `ownProposalHistory` is passed in explicitly and restated in
+ * the prompt — that's what lets the model "remember" its own prior offers
+ * well enough to concede monotonically, without the complexity of replaying
+ * raw tool_use/tool_result turns across rounds.
  */
-export async function reactToProposal(round: number, counterProposal: Proposal): Promise<Proposal> {
+export async function reactToProposal(
+  round: number,
+  counterProposal: Proposal,
+  ownProposalHistory: Proposal[],
+): Promise<Proposal> {
   const result = await getStructuredCompletion({
     systemPrompt: SYSTEM_PROMPT,
     messages: [
       {
         role: "user",
-        content: `Round ${round}: the counterparty's most recent proposal was:\n${JSON.stringify(
+        content: `Round ${round}:\n\nYour own proposal history so far:\n${JSON.stringify(
+          ownProposalHistory,
+          null,
+          2,
+        )}\n\nThe counterparty's most recent proposal was:\n${JSON.stringify(
           counterProposal,
           null,
           2,
